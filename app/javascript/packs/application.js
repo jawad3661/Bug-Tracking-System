@@ -10,6 +10,7 @@ import "channels"
 import 'css/site'
 import 'jquery'
 import('src/plugins')
+require("packs/select2setup")
 
 Rails.start()
 Turbolinks.start()
