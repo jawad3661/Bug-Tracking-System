@@ -16,8 +16,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   #GET /resource/edit
   def edit
-     super
-   end
+  #   super
+  # end
 
   # PUT /resource
   # def update

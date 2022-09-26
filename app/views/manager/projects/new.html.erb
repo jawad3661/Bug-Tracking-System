@@ -1,0 +1,23 @@
+<h1>New Project</h1>
+<%= form_for @project, url: manager_projects_path do |form| %>
+  <%= render partial: "manager/projects/errors" %>
+  <div class="form-group">
+    <%= form.label :title %><br>
+    <%= form.text_field :title, class:"form-control" %>
+  </div><br>
+  <div class="form-group">
+    <%= form.label :description %><br>
+    <%= form.text_area :description, class:"form-control" %>
+  </div><br>
+  <div class="form-group">
+    <%= form.label :user_ids, 'Select Users' %>
+    <%= form.collection_select :user_ids, @user.all, :id, :display_users, {include_blank: true}, multiple: true, class: "select2 form-control" %>
+  </div><br>
+  <div class="actions">
+    <%= form.submit 'Create', class: 'btn btn-info' %>
+    <%= link_to 'Back', manager_projects_path, class: 'btn btn-secondary' %>
+  </div>
+
+<% end %>
+
+
