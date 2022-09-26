@@ -1,0 +1,21 @@
+<% if current_user.projects.any? %>
+  <h1>Project Assigned To <%= current_user.name%> </h1>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th , style="text-align: center;">Title</th>
+        <th , style="text-align: center;">Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% current_user.projects.each do |project| %>
+        <tr>
+          <td , style="text-align: center;"><%= project.title %></td>
+          <td , style="text-align: center;"><%= project.description %></td>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No Assign Any Project</p>
+<% end %>
