@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_23_051052) do
+ActiveRecord::Schema.define(version: 2022_09_28_064645) do
 
   create_table "projects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.bigint "manager_id", null: false
+    t.bigint "creator_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["manager_id"], name: "index_projects_on_manager_id"
+    t.index ["creator_id"], name: "index_projects_on_creator_id"
   end
 
   create_table "user_projects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -39,13 +39,13 @@ ActiveRecord::Schema.define(version: 2022_09_23_051052) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
-    t.string "user_type"
-    t.integer "availability", default: 0
+    t.string "user_type", default: "User"
+    t.boolean "deactivated", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "projects", "users", column: "manager_id"
+  add_foreign_key "projects", "users", column: "creator_id"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
 end
