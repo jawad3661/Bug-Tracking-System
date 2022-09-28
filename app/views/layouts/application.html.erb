@@ -13,8 +13,8 @@
   <body>
     <%= render 'shared/header' %>
     <div class="container">
-    <p class="alert alert-success"><%= notice %></p>
-    <%= yield %>
+      <%= render 'shared/flash_messages' %>
+      <%= yield %>
     </div>
   </body>
 </html>

@@ -1,0 +1,19 @@
+<%= form_with(model: [:manager, project]) do |f| %>
+  <%= f.hidden_field :creator_id, value: current_user.id %>
+  <div class='form-group mb-3'>
+    <%= f.label :title %><br>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class='form-group mb-3'>
+    <%= f.label :description %><br>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <div class='form-group mb-3'>
+    <%= f.label :user_ids, 'Select User' %>
+    <%= f.collection_select :user_ids, user_options, :id, :display_users, {include_blank: true}, multiple: false, class: 'select2 form-control' %>
+  </div>
+  <div class='form-group mb-3'>
+    <%= f.submit 'Update', class: 'btn btn-success' %>
+    <%= link_to 'Back', manager_projects_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,14 @@
+<p>
+  <strong>Name:</strong>
+  <%= @project.title %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @project.description%>
+</p>
+<p>
+  <strong>Assigned Manager:</strong>
+  <%= @project.creator_id%>
+</p>
+
+<%= link_to 'Back', qa_projects_path, class: 'btn btn-primary' %>

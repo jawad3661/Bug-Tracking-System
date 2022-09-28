@@ -13,10 +13,6 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
   </div>
 </br>
-  <div class="form-group">
-    <b>Select one :</b> <%= f.collection_select(:user_type, ['Developer', 'Manager','Admin', 'QA'], :to_s, :to_s, include_hidden: false)%>
-  </div>
-</br>
 
   <div class="form-group">
     <%= f.label :password %>

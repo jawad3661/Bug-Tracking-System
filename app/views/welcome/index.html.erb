@@ -1,1 +1,12 @@
-<h1 style="text-align: center;">Welcome to Bug Tracking System</h1
+<h1 style="text-align: center;">Welcome to Bug Tracking System</h1>
+<% if user_signed_in? %>
+  <% if current_user.admin? %>
+    <%= link_to 'Back', admin_users_path, class: 'btn btn-primary' %>
+  <% elsif current_user.qa? %>
+    <%= link_to 'Back', qa_projects_path, class: 'btn btn-primary' %>
+  <% elsif current_user.developer? %>
+    <%= link_to 'Back', developer_projects_path, class: 'btn btn-primary' %>
+  <% elsif current_user.manager? %>
+    <%= link_to 'Back', manager_projects_path, class: 'btn btn-primary' %>
+  <% end %>
+<% end %>

@@ -1,25 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" href="#">Bug Tracking System</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
+  <div class='container'>
+    <% if user_signed_in? %>
+      <% if current_user.admin? %>
+        <%= link_to 'Bug Tracking System', admin_users_path, class: 'nav navbar-brand' %>
+      <% end %>
+      <% if current_user.manager? %>
+        <%= link_to 'Bug Tracking System', manager_projects_path, class: 'nav navbar-brand' %>
+      <% end %>
+      <% if current_user.developer? %>
+        <%= link_to 'Bug Tracking System', developer_projects_path, class: 'nav navbar-brand' %>
+      <% end %>
+      <% if current_user.qa? %>
+        <%= link_to 'Bug Tracking System', qa_projects_path, class: 'nav navbar-brand' %>
+      <% end %>
+    <% else %>
+      <%= link_to 'Bug Tracking System', root_path, class: 'nav navbar-brand' %>
 
-    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" > 
-        <% if user_signed_in? %>
-          <li class="nav-item">
-          <span class="navbar-text"><%= current_user.email %></span>
-          <%= link_to 'Edit Profile' , edit_user_registration_path, class:"btn btn-warning" %>
-          <%= link_to 'LogOut', destroy_user_session_path, method: :delete, class:"btn btn-success" %>   
-            </li>       
-        <% else %>
-          <li class="nav-item">
-            <%= link_to 'Sign In',user_session_path,class:"btn btn-success" %>
+      <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
+        <span class='navbar-toggler-icon'></span>
+      </button>
+    <% end %>
+
+    <ul class='navbar-nav ms-auto mb-2 mb-lg-0' >
+      <% if user_signed_in? %>
+        <li class='nav-item'>
+        <span class='navbar-text'><%= current_user.email %></span>
+        <%= link_to 'Edit Profile' , edit_user_registration_path, class: 'btn btn-warning' %>
+        <%= link_to 'LogOut', destroy_user_session_path, method: :delete, class: 'btn btn-success' %>
           </li>
-          <li class="nav-item px-3">
-            <%= link_to 'Sign Up', new_user_registration_path, class:"btn btn-warning" %>
-          </li>
-        <% end %>
+      <% else %>
+        <li class='nav-item'>
+          <%= link_to 'Sign In',user_session_path,class: 'btn btn-success' %>
+        </li>
+        <li class='nav-item px-3'>
+          <%= link_to 'Sign Up', new_user_registration_path, class:'btn btn-warning' %>
+        </li>
+      <% end %>
     </ul>
   </div>
 </nav>
