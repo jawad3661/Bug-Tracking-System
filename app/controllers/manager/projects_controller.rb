@@ -1,7 +1,6 @@
 class Manager::ProjectsController < ApplicationController
   before_action :validate_manager
-  before_action :find_project, only: %i[show edit update destroy]
-  before_action :get_dev_qa, only: %i[edit new]
+  before_action :set_project, only: %i[show edit update destroy]
 
   def index
     @project = current_user.created_projects
@@ -10,29 +9,26 @@ class Manager::ProjectsController < ApplicationController
   def show; end
 
   def new
-      @project = Project.new
+    @project = Project.new
   end
 
   def create
     @project = Project.new(project_params)
-    @project.manager = current_user
     if @project.save
-       flash[:success] = 'Project was created successfully!'
-       redirect_to manager_projects_path(@project)
+      redirect_to manager_projects_path(@project), notice: 'Project was created successfully!'
     else
-       render 'new'
+      redirect_to new_manager_project_path, alert: @project.errors.full_messages.to_sentence
     end
   end
 
   def edit; end
 
   def update
-      if @project.update(project_params)
-        flash[:notice] = 'Project was successfully updated'
-        redirect_to manager_projects_path(@project)
-      else
-        render 'edit'
-      end
+    if @project.update(project_params)
+      redirect_to manager_projects_path(@project), notice: 'Project was successfully updated'
+    else
+      render 'edit'
+    end
   end
 
   def destroy
@@ -42,17 +38,13 @@ class Manager::ProjectsController < ApplicationController
 
   private
 
-  def find_project
+  def set_project
     @project = Project.find(params[:id])
   end
 
-  def get_dev_qa
-    @user = User.show_user
-  end
-
   def project_params
-      params.require(:project).permit(:title, :description, user_ids: [])
-    end
+    params.require(:project).permit(:title, :description, :creator_id, user_ids: [])
+  end
 
   def validate_manager
     return if current_user&.manager?
