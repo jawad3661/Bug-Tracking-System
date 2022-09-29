@@ -1,4 +1,4 @@
-class ChangeColumnattrToUsers < ActiveRecord::Migration[6.1]
+class ChangeColumnsInUsers < ActiveRecord::Migration[6.1]
   def up
     change_column :users, :availability , :boolean
     rename_column :users, :availability , :deactivated
