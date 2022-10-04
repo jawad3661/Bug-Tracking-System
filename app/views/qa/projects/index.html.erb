@@ -1,10 +1,11 @@
 <% if current_user.projects.any? %>
   <h1>Project Assigned To <%= current_user.name %> </h1>
-  <table class='table table-bordered table-striped'>
-    <thead>
+  <table class='table table-bordered'>
+    <thead class='table-dark'>
       <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>Possible Action</th>
       </tr>
     </thead>
 
@@ -20,3 +21,24 @@
 <% else %>
   <p>No Assign Any Project</p>
 <% end %>
+  <p><hr></p>
+<% if @all_projects.any? %>
+  <h1>All Projects</h1>
+  <table class='table table-bordered'>
+    <thead class='table-dark'>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @all_projects.find_each do |project| %>
+        <tr>
+          <td><%= project.title %></td>
+          <td><%= project.description %></td>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+

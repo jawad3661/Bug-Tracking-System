@@ -4,11 +4,12 @@
 </p>
 <p>
   <strong>Email:</strong>
-  <%= @project.description%>
+  <%= @project.description %>
 </p>
 <p>
   <strong>Assigned Manager:</strong>
-  <%= @project.creator_id%>
+  <%= @project&.manager&.name %>
 </p>
+<td><%= link_to 'Show Bugs', qa_project_bug_path(@project), class:'btn btn-success' %></td>
 
 <%= link_to 'Back', qa_projects_path, class: 'btn btn-primary' %>
