@@ -1,10 +1,12 @@
 <% if current_user.projects.any? %>
   <h1>Project Assigned To <%= current_user.name %> </h1>
-  <table class='table table-bordered table-striped'>
-    <thead>
+  <hr></hr>
+  <table class='table table-bordered'>
+    <thead class='table-dark'>
       <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>Possible Action</th>
       </tr>
     </thead>
 
@@ -13,7 +15,7 @@
         <tr>
           <td><%= project.title %></td>
           <td><%= project.description %></td>
-          <td><%= link_to 'Show Project', qa_project_path(project), class: 'btn btn-success' %></td>
+          <td><%= link_to 'Show Project', [:developer, project], class: 'btn btn-success' %></td>
       <% end %>
     </tbody>
   </table>

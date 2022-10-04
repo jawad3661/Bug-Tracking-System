@@ -8,7 +8,8 @@
 </p>
 <p>
   <strong>Assigned Manager:</strong>
-  <%= @project.name%>
+  <%= @project&.manager&.name %>
 </p>
+<td><%= link_to 'Show Bugs', developer_project_bug_path(@project), class:'btn btn-success' %></td>
 
 <%= link_to 'Back', developer_projects_path, class: 'btn btn-primary' %>
