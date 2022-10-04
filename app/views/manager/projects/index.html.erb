@@ -1,7 +1,7 @@
 <%= link_to 'Create', new_manager_project_path, class: 'btn btn-xs btn-primary' %>
 <p><hr></p>
-<table class='table table-bordered table-striped'>
-  <thead>
+<table class='table table-bordered'>
+  <thead class='table-dark'>
     <tr>
       <th>Name</th>
       <th>Description</th>
@@ -16,7 +16,7 @@
         <td><%= project.description %></td>
         <td><%= link_to 'Edit', edit_manager_project_path(project), class: 'btn btn-primary' %></td>
         <td><%= render 'show', project: project %></td>
-        <td><%= link_to 'Delete', [:manager, project], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning' %></td>
+        <td><%= link_to 'Delete', [:manager, project], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>

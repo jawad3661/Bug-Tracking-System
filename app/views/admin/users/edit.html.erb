@@ -7,7 +7,7 @@
     <%= f.label :email %>
     <%= f.text_field :email, class: 'form-control' %>
   </div>
-  <div class="form-group mb-3">
+  <div class='form-group mb-3'>
     <%= f.label :user_ids, 'Select User' %>
     <%= f.collection_select :user_type, user_types, :to_s, :to_s,{include_blank: true}, multiple: false, class: 'select2 form-control' %>
   </div>

@@ -26,7 +26,7 @@
         <li class='nav-item'>
         <span class='navbar-text'><%= current_user.email %></span>
         <%= link_to 'Edit Profile' , edit_user_registration_path, class: 'btn btn-warning' %>
-        <%= link_to 'LogOut', destroy_user_session_path, method: :delete, class: 'btn btn-success' %>
+        <%= link_to 'LogOut', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
           </li>
       <% else %>
         <li class='nav-item'>

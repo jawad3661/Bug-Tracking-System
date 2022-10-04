@@ -15,17 +15,13 @@
           <%= project.title %>
         </p>
         <p>
-          <strong>Email:</strong>
+          <strong>Description:</strong>
           <%= project.description%>
         </p>
         <p>
           <strong>Manager Name:</strong>
           <%= current_user.name%>
         </p>
-      </div>
-      <div class='modal-footer'>
-        <%= link_to 'Edit', edit_manager_project_path(project),class: 'btn btn-success' %>
-        <%= link_to 'Back', manager_projects_path, class: 'btn btn-primary' %>
       </div>
     </div>
   </div>
