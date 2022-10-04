@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :created_projects, class_name: 'Project', foreign_key: 'creator_id'
   has_many :user_projects
   has_many :projects, through: :user_projects
+  has_many :created_bugs, class_name: 'Bug', foreign_key: 'creator_id'
+  has_many :solved_bugs, class_name: 'Bug', foreign_key: 'solver_id'
 
   scope :not_admin, -> { where.not(user_type: 'admin') }
 
