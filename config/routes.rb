@@ -12,11 +12,15 @@ Rails.application.routes.draw do
   end
 
   namespace :developer do
-    resources :projects, only: [:index, :show]
+    resources :projects, only: [:index, :show] do
+      resources :bugs
+    end
   end
 
   namespace :qa do
-    resources :projects, only: [:index, :show]
+    resources :projects, only: [:index, :show] do
+      resources :bugs
+    end
   end
 
   namespace :manager do
