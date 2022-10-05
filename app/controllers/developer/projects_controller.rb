@@ -1,9 +1,10 @@
 class Developer::ProjectsController < ApplicationController
-  before_action :validate_developer
-    before_action :set_project, only: :show
+  before_action :set_project, only: :show
+  before_action :set_authorize, only: :show
 
   def index
     @projects = current_user.projects
+    authorize [:developer, @projects]
   end
 
   def show; end
@@ -14,9 +15,7 @@ class Developer::ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
-  def validate_developer
-    return if current_user&.developer?
-
-    redirect_to root_path, notice: 'Cant Access'
+  def set_authorize
+    authorize [:developer, @project]
   end
 end

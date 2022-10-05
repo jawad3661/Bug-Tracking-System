@@ -3,6 +3,7 @@ class Admin::UsersController < ApplicationController
 
   def index
     @users = User.not_admin
+    authorize [:admin, @users]
   end
 
   def show; end
@@ -13,9 +14,12 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path, notice: "Account #{@user.deactivated? ? 'Disabled' : 'Enabled'}"
   end
 
-  def edit; end
+  def edit
+    authorize [:admin, @user]
+  end
 
   def update
+    authorize [:admin, @user]
     if @user.update(user_params)
       redirect_to admin_users_path
     else
@@ -24,6 +28,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
+    authorize [:admin, @user]
     @user.destroy
     redirect_to admin_users_path, notice: 'Project was successfully destroyed'
   end

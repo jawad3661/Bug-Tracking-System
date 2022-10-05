@@ -1,10 +1,12 @@
 class Developer::BugsController < ApplicationController
-  before_action :validate_developer
   before_action :set_project, only: :show
   before_action :set_bug, only: %i[edit update]
+  before_action :set_authorize, only: %i[ edit update]
+
 
   def show
     @bugs = @project.bugs
+    authorize [:developer, @bugs]
   end
 
   def edit; end
@@ -19,18 +21,16 @@ class Developer::BugsController < ApplicationController
 
   private
 
-  def validate_developer
-    return if current_user&.developer?
-
-    redirect_to root_path, notice: 'Cant Access'
-  end
-
   def set_bug
     @bug = Bug.find(params[:id])
   end
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def set_authorize
+    authorize [:developer, @bug]
   end
 
   def bug_params

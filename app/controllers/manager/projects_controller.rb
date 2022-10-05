@@ -1,19 +1,21 @@
 class Manager::ProjectsController < ApplicationController
-  before_action :validate_manager
   before_action :set_project, only: %i[show edit update destroy]
-
+  before_action :set_authorize, only: %i[show edit update destroy]
   def index
-    @project = current_user.created_projects
+    @projects = current_user.created_projects
+    authorize [:manager, @projects]
   end
 
   def show; end
 
   def new
     @project = Project.new
+    authorize [:manager, @project]
   end
 
   def create
     @project = Project.new(project_params)
+    authorize [:manager, @project]
     if @project.save
       redirect_to manager_projects_path(@project), notice: 'Project was created successfully!'
     else
@@ -42,13 +44,11 @@ class Manager::ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
-  def project_params
-    params.require(:project).permit(:title, :description, :creator_id, user_ids: [])
+  def set_authorize
+    authorize [:manager, @project]
   end
 
-  def validate_manager
-    return if current_user&.manager?
-
-    redirect_to root_path, notice: 'Cant Access'
+  def project_params
+    params.require(:project).permit(:title, :description, :creator_id, user_ids: [])
   end
 end

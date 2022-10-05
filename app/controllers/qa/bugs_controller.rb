@@ -1,18 +1,20 @@
 class Qa::BugsController < ApplicationController
   before_action :set_bug, only: %i[edit update destroy]
-  before_action :validate_qa
 
   def new
     @bug = Bug.new
+    authorize [:qa, @bug]
   end
 
   def show
     @project = Project.find(params[:project_id])
     @bugs = @project.bugs
+    authorize [:qa, @bugs]
   end
 
   def create
     @bug = Bug.new(bug_params)
+    authorize [:qa, @bug]
     @bug.creator = current_user
     @bug.project_id = params[:project_id]
     if @bug.save
@@ -22,9 +24,12 @@ class Qa::BugsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  authorize [:qa, @bug]
+  end
 
   def update
+    authorize [:qa, @bug]
     if @bug.update(bug_params)
       redirect_to qa_project_path(@bug.project_id), notice: 'Bug was edited successfully!'
     else
@@ -33,6 +38,7 @@ class Qa::BugsController < ApplicationController
   end
 
   def destroy
+    authorize [:qa, @bug]
     @bug.destroy
     redirect_to qa_project_path(@bug.project_id), notice: 'Bug was deleted successfully'
   end
@@ -45,11 +51,5 @@ class Qa::BugsController < ApplicationController
 
   def set_bug
     @bug = Bug.find(params[:id])
-  end
-
-  def validate_qa
-    return if current_user&.qa?
-
-    redirect_to root_path, notice: 'Cant Access'
   end
 end
