@@ -11,6 +11,7 @@ import 'css/site'
 import 'jquery'
 import('src/plugins')
 require("packs/select2setup")
+require("packs/custom")
 
 Rails.start()
 Turbolinks.start()

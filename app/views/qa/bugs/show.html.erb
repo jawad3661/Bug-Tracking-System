@@ -1,5 +1,5 @@
 <h1>Bugs</h1>
-<td><%= link_to 'Create Bugs', new_qa_project_bug_path, class:'btn btn-success' %></td>
+<td><%= link_to 'Create', new_qa_project_bug_path, class:'btn btn-success' %></td>
 <hr></hr>
 
 <table class='table table-bordered'>
@@ -7,22 +7,22 @@
     <th>Title</th>
     <th>Description</th>
     <th>Deadline</th>
-    <th>Bug_Type</th>
+    <th>Bug Type</th>
     <th>Status</th>
     <th>Solver Name</th>
-    <th colspan="2">Possible Actions</th>
+    <th>Actions</th>
 
   </tr>
   <% @bugs.each do |bug| %>
     <tr>
       <td><%= bug.title %></td>
-        <td><%= bug.description %></td>
-        <td><%= bug.deadline %></td>
-        <td><%= bug.bug_type%></td>
-        <td><%= bug.status %></td>
-        <td><%= bug&.solver&.name %></td>
-        <td><%= link_to 'Edit', edit_qa_project_bug_path(bug.project_id, bug), class: 'btn btn-primary' %></td>
-        <td><%= link_to 'Delete', qa_project_bug_path(bug.project_id, bug), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+      <td><%= bug.description %></td>
+      <td><%= bug.deadline %></td>
+      <td><%= bug.bug_type%></td>
+      <td><%= bug.status %></td>
+      <td><%= bug&.solver&.name %></td>
+      <td><%= link_to 'Edit', edit_qa_project_bug_path(bug.project_id, bug), class: 'btn btn-primary mx-3' %>
+          <%= link_to 'Delete', qa_project_bug_path(bug.project_id, bug), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
     </tr>
   <% end %>
 </table>

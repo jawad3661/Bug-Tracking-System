@@ -3,12 +3,14 @@
   <div class='col-md-12'>
     <%= form_for @bug, url: {action: 'create'} do |f| %>
       <%= f.hidden_field :solver_id %>
+
       <div class='form-group mb-3'>
         <div class='control-label col-md-8'>
           <%= f.label :title %>
           <%= f.text_field :title, class: 'form-control', placeholder: 'Title of the bug', autofocus: true %>
         </div>
       </div>
+
       <div class='form-group mb-3'>
         <div class='control-label col-md-8'>
           <%= f.label :description %>
@@ -24,23 +26,22 @@
       </div>
 
       <div class='form-group mb-3'>
-        <div class='control-label col-md-8'>
+        <div class='control-label col-md-2'>
           <%= f.label :Select_Type %>
         </div>
-        <div class='field'>
-          <%= f.label :bug_type, 'Feature' %>
-          <%= f.radio_button :bug_type, 'feature' %>
-          <%= f.label :bug_type, 'Bug' %>
-          <%= f.radio_button :bug_type, 'bug' %>
+        <div class='form-group'>
+          <div class='col-md-8 bugtype'>
+            <%= f.collection_select :bug_type, Bug::bug_types.values, :to_s, :titlecase, include_blank: true, class:'form-control' %>
+          </div>
         </div>
       </div>
 
-      <div class='form-group mb-3'>
+      <div class='form-group mb-3 abc'>
         <div class='control-label col-md-2'>
           <%= f.label :Status %>
         </div>
         <div class='col-md-8'>
-          <%= f.select :status, ['New', 'Started', 'Completed', 'resolved'], {include_blank: true} %>
+         <%= f.collection_select :status, Bug::statuses.values, :to_s, :titlecase, {include_blank: true}, multiple: false, class: 'select2 form-control statustype' %>
         </div>
       </div>
 
@@ -57,9 +58,9 @@
         </div>
       </div>
 
-    <div class='col-md-4 col-md-offset-4'>
-      <%= link_to 'Back', qa_project_bug_path(id: params[:project_id]), class: 'btn btn-success' %>
-    </div>
+      <div class='col-md-4 col-md-offset-4'>
+        <%= link_to 'Back', qa_project_bug_path(id: params[:project_id]), class: 'btn btn-success' %>
+      </div>
     <% end %>
   </div>
 </div>

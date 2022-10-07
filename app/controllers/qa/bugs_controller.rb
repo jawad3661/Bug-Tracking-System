@@ -17,15 +17,23 @@ class Qa::BugsController < ApplicationController
     authorize [:qa, @bug]
     @bug.creator = current_user
     @bug.project_id = params[:project_id]
-    if @bug.save
+    if @bug.project_id.in? current_user.projects.ids.to_a
+      if @bug.save
       redirect_to qa_project_path(@bug.project_id), notice: 'Bug was created successfully!'
+      else
+        redirect_to new_qa_project_bug_path, alert: @bug.errors.full_messages.to_sentence
+      end
     else
-      redirect_to new_qa_project_bug_path, alert: @bug.errors.full_messages.to_sentence
+      redirect_to qa_project_path(@bug.project_id), notice: 'Cant Create'
     end
   end
 
   def edit
-  authorize [:qa, @bug]
+    authorize [:qa, @bug]
+    if @bug.project_id.in? current_user.projects.ids.to_a
+    else
+      redirect_to qa_project_path(@bug.project_id), notice: 'Cant edit'
+    end
   end
 
   def update
@@ -37,10 +45,15 @@ class Qa::BugsController < ApplicationController
     end
   end
 
+
   def destroy
     authorize [:qa, @bug]
-    @bug.destroy
-    redirect_to qa_project_path(@bug.project_id), notice: 'Bug was deleted successfully'
+    if @bug.project_id.in? current_user.projects.ids.to_a
+      @bug.destroy
+      redirect_to qa_project_path(@bug.project_id), notice: 'Bug was deleted successfully'
+    else
+      redirect_to qa_project_path(@bug.project_id), notice: 'Cant Destroy'
+    end
   end
 
   private
