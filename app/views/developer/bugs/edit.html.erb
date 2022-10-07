@@ -1,14 +1,22 @@
+<h1>Edit a Bug</h1>
+  <% if current_user.id == @bug.solver_id || @bug.solver_id.blank? %>
+    <%= @bug.solver_id? ? (link_to 'Remove Developer', update_solver_developer_project_bug_path(@bug.project_id, @bug), method: :patch, remote: true, class: 'btn btn-danger') : (link_to 'Add Developer',update_solver_developer_project_bug_path(@bug.project_id, @bug), method: :patch, remote: true, class: 'btn btn-dark') %>
+  <% else %>
+    <%= @bug.solver_id? ? (link_to 'Remove Developer', update_solver_developer_project_bug_path(@bug.project_id, @bug), method: :patch, remote: true, class: 'btn btn-danger disabled') : (link_to 'Add Developer',update_solver_developer_project_bug_path(@bug.project_id, @bug), method: :patch, remote: true, class: 'btn btn-dark disabled') %>
+  <% end %>
+
 <div class="row">
-  <h1>Edit a Bug</h1>
   <div class="col-md-12">
     <%= form_for @bug, url: {action: 'update'} do |f| %>
       <%= f.hidden_field :solver_id, value: current_user.id %>
-      <div class='form-group mb-3'>
+
+      <div class='form-group mb-3 mt-3'>
         <div class='control-label col-md-8'>
           <%= f.label :title %>
           <%= f.text_field :title, class: 'form-control', placeholder: 'Title of the bug', autofocus: true, readonly: true %>
         </div>
       </div>
+
       <div class='form-group mb-3'>
         <div class='control-label col-md-8'>
           <%= f.label :description %>
@@ -22,50 +30,35 @@
           <%= f.date_field :deadline, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control', readonly: true %>
         </div>
       </div>
-      <% if can_edit_bug? %>
-        <div class='form-group mb-3'>
-          <div class='control-label col-md-8'>
-            <%= f.label :Select_Type %>
-          </div>
-          <div class='field'>
-            <%= f.label :bug_type, 'Feature' %>
-            <%= f.radio_button :bug_type, 'feature', readonly: true %>
-            <%= f.label :bug_type, 'Bug' %>
-            <%= f.radio_button :bug_type, 'bug', readonly: true %>
-          </div>
+
+      <div class='form-group mb-3'>
+        <div class='control-label col-md-2'>
+          <%= f.label :Select_Type %>
         </div>
-          <div class='form-group mb-3'>
-            <div class='control-label col-md-8'>
-              <%= f.label :solver_id, 'Assign Himself' %>
-            </div>
-            <div class='field'>
-              <%= f.label :Yes, '' %>
-              <%= f.radio_button :solver_id, current_user.id %>
-              <%= f.label :bug_type, 'No' %>
-              <%= f.radio_button :solver_id, '' %>
-            </div>
-          </div>
-          <div class='form-group mb-3'>
-            <div class='control-label col-md-2'>
-              <%= f.label :Status %>
-            </div>
-            <div class='col-md-8'>
-              <%= f.select :status, status_types, include_blank: true %>
-            </div>
-          </div>
+        <div class='col-md-8 bugtype'>
+          <%= f.collection_select :bug_type, Bug::bug_types.values, :to_s, :titlecase, include_blank: true, class:'form-control' %>
+        </div>
+      </div>
 
-          <%= render 'display_image', object: @bug %>
+      <div class='form-group mb-3'>
+        <div class='control-label col-md-2'>
+          <%= f.label :Status %>
+        </div>
+        <div class='col-md-8'>
+          <%= f.collection_select :status, Bug::statuses.values, :to_s, :titlecase, {include_blank: true}, multiple: false, class: 'select2 form-control' %>
+        </div>
+      </div>
 
-          <div class='form-group mb-3'>
-            <div class='col-md-offset-2 col-md-10'>
-              <%= f.submit class: 'btn btn-primary' %>
-            </div>
-          </div>
-      <% end %>
+      %= render 'display_image', object: @bug %>
+
+      <div class='form-group mb-3'>
+        <div class='col-md-offset-2 col-md-10'>
+          <%= f.submit class: 'btn btn-primary' %>
+        </div>
+      </div>
       <div class='col-md-4 col-md-offset-4'>
         <%= link_to 'Back', developer_project_bug_path(@bug.project_id), class: 'btn btn-success' %>
       </div>
     <% end %>
   </div>
 </div>
-

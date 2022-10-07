@@ -13,7 +13,11 @@ Rails.application.routes.draw do
 
   namespace :developer do
     resources :projects, only: [:index, :show] do
-      resources :bugs
+      resources :bugs do
+        member do
+          patch :update_solver
+        end
+      end
     end
   end
 
