@@ -2,7 +2,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum user_type: {user: 'user', developer: 'developer', manager: 'manager', admin:'admin', qa: 'qa'}
+  enum user_type: {user: 'user', developer: 'developer', manager: 'manager', admin: 'admin', qa: 'qa'}
 
   has_many :created_projects, class_name: 'Project', foreign_key: 'creator_id'
   has_many :user_projects

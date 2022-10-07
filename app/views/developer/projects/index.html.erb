@@ -6,7 +6,7 @@
       <tr>
         <th>Title</th>
         <th>Description</th>
-        <th>Possible Action</th>
+        <th>Actions</th>
       </tr>
     </thead>
 
@@ -15,7 +15,7 @@
         <tr>
           <td><%= project.title %></td>
           <td><%= project.description %></td>
-          <td><%= link_to 'Show Project', [:developer, project], class: 'btn btn-success' %></td>
+          <td><%= link_to 'Show', [:developer, project], class: 'btn btn-success' %></td>
       <% end %>
     </tbody>
   </table>

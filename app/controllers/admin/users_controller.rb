@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, except: :index
+  before_action :set_authorize, except: :index
 
   def index
     @users = User.not_admin
@@ -14,12 +15,9 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path, notice: "Account #{@user.deactivated? ? 'Disabled' : 'Enabled'}"
   end
 
-  def edit
-    authorize [:admin, @user]
-  end
+  def edit; end
 
   def update
-    authorize [:admin, @user]
     if @user.update(user_params)
       redirect_to admin_users_path
     else
@@ -28,7 +26,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    authorize [:admin, @user]
     @user.destroy
     redirect_to admin_users_path, notice: 'Project was successfully destroyed'
   end
@@ -41,5 +38,9 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def set_authorize
+    authorize [:admin, @user]
   end
 end

@@ -4,7 +4,7 @@
     <tr>
       <th>Email</th>
       <th>Name</th>
-      <th colspan='3'>Actions</th>
+      <th>Actions</th>
       <th colspan='2'>Status</th>
     </tr>
   </thead>
@@ -14,9 +14,9 @@
       <tr>
         <td><%= user.email %></td>
         <td><%= user.name %></td>
-        <td><%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-success' %></td>
-        <td><%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary' %></td>
-        <td><%= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        <td><%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-success' %>
+          <%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary mx-3' %>
+          <%= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
         <td><%= user.deactivated? ? (link_to 'Enable', update_status_admin_user_path(user), method: :patch, class: 'btn btn-dark') : (link_to 'Disable', update_status_admin_user_path(user), method: :patch, class: 'btn btn-dark') %></td>
       </tr>
     <% end %>
