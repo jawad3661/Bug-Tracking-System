@@ -1,0 +1,7 @@
+<tr id='userRow_<%= project.id %>'>
+  <td><%= project.title %></td>
+  <td><%= project.description %></td>
+  <td><%= link_to 'Edit', edit_manager_project_path(project), class: 'btn btn-primary', data: { bs_toggle: 'modal', bs_target: '#edituserModal', remote: true } %>
+    <%= link_to 'Show', manager_project_path(project), class: 'btn btn-success mx-3', data: { bs_toggle: 'modal', bs_target: '#showuserModal', remote: true }%>
+    <%= link_to 'Delete', [:manager, project], method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-danger' %></td>
+</tr>

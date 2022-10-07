@@ -1,28 +1,17 @@
-<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#exampleModal'>
-  Show
-</button>
-
-<div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-  <div class='modal-dialog'>
-    <div class='modal-content'>
-      <div class='modal-header'>
-        <h5 class='modal-title' id='exampleModalLabel'>Project Description</h5>
-        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-      </div>
-      <div class='modal-body'>
-        <p>
-          <strong>Name:</strong>
-          <%= project.title %>
-        </p>
-        <p>
-          <strong>Description:</strong>
-          <%= project.description%>
-        </p>
-        <p>
-          <strong>Manager Name:</strong>
-          <%= current_user.name%>
-        </p>
-      </div>
-    </div>
-  </div>
+<div class='modal-body'>
+  <p>
+    <strong>Name:</strong>
+    <%= project.title %>
+  </p>
+  <p>
+    <strong>Description:</strong>
+    <%= project.description%>
+  </p>
+  <p>
+    <strong>Manager Name:</strong>
+    <%= current_user.name%>
+    </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Close</button>
 </div>

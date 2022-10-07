@@ -16,26 +16,37 @@ class Manager::ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     authorize [:manager, @project]
-    if @project.save
-      redirect_to manager_projects_path(@project), notice: 'Project was created successfully!'
-    else
-      redirect_to new_manager_project_path, alert: @project.errors.full_messages.to_sentence
+    respond_to do |format|
+      if @project.save
+        format.js
+        format.html {redirect_to manager_projects_path(@project), notice: 'Project was created successfully!'}
+      else
+        format.js
+      end
     end
   end
+
 
   def edit; end
 
   def update
-    if @project.update(project_params)
-      redirect_to manager_projects_path(@project), notice: 'Project was successfully updated'
-    else
-      render 'edit'
+    respond_to do |format|
+      if @project.update(project_params)
+        format.html {redirect_to manager_projects_path(@project), notice: 'Project was successfully updated' }
+        format.js
+      else
+        format.js
+        format.html {render 'edit' }
+      end
     end
   end
 
   def destroy
     @project.destroy
-    redirect_to manager_projects_path, notice: 'Project was successfully destroyed'
+    respond_to do |format|
+      format.html {redirect_to manager_projects_path, notice: 'Project was successfully destroyed'}
+      format.js
+    end
   end
 
   private

@@ -1,0 +1,7 @@
+<% if @project.errors.any? %>
+  $('#errorArea').html("<%= j render('shared/errors', object: @project)%>")
+<% else %>
+  $('#userRow_<%= @project.id %>').replaceWith("<%= j render('user_row', project: @project) %>");
+  $('.close-modal').click();
+<% end %>
+

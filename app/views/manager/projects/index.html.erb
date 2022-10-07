@@ -1,23 +1,60 @@
-<%= link_to 'Create', new_manager_project_path, class: 'btn btn-xs btn-primary' %>
-<p><hr></p>
+<h1>Projects</h1>
+<%= link_to 'Create', new_manager_project_path, class: 'btn btn-xs btn-primary', data: { bs_toggle: 'modal', bs_target: '#newuserModal', remote: true } %>
+<hr>
 <table class='table table-bordered'>
   <thead class='table-dark'>
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th colspan="3">Possible Actions</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
-  <tbody>
-    <% @project.find_each do |project| %>
-      <tr>
-        <td><%= project.title %></td>
-        <td><%= project.description %></td>
-        <td><%= link_to 'Edit', edit_manager_project_path(project), class: 'btn btn-primary' %></td>
-        <td><%= render 'show', project: project %></td>
-        <td><%= link_to 'Delete', [:manager, project], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
-      </tr>
+  <tbody id='usersTable' >
+    <% @projects.find_each do |project| %>
+      <%= render 'user_row', project: project %>
     <% end %>
   </tbody>
 </table>
+
+<div class="modal fade" id="newuserModal" role="dialog" style="overflow:hidden;" aria-labelledby="newuserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newuserModalLabel">Create Project</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id='newuserform'>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edituserModal" role="dialog" style="overflow:hidden;" aria-labelledby="edituserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edituserModalLabel">Update Project</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id='edituserform'>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="showuserModal" role="dialog" style="overflow:hidden;" aria-labelledby="showuserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showuserModalLabel">Project Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id='showuserdetail'>
+
+      </div>
+    </div>
+  </div>
+</div>
