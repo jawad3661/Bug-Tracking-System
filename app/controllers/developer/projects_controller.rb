@@ -3,7 +3,7 @@ class Developer::ProjectsController < ApplicationController
   before_action :set_authorize, only: :show
 
   def index
-    @projects = current_user.projects
+    @projects = current_user.projects.page(params[:page])
     authorize [:developer, @projects]
   end
 

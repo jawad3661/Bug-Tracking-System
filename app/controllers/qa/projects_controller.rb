@@ -4,7 +4,7 @@ class Qa::ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects
-    @all_projects = Project.all
+    @all_projects = Project.all.page(params[:page])
     authorize [:qa, @projects]
   end
 

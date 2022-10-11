@@ -8,16 +8,15 @@ class Qa::BugsController < ApplicationController
 
   def show
     @project = Project.find(params[:project_id])
-    @bugs = @project.bugs
+    @bugs = @project.bugs.includes(:solver).page(params[:page])
     authorize [:qa, @bugs]
   end
 
   def create
     @bug = Bug.new(bug_params)
     authorize [:qa, @bug]
-    @bug.creator = current_user
-    @bug.project_id = params[:project_id]
-    if @bug.project_id.in? current_user.projects.ids.to_a
+
+    if project_id_exist?
       if @bug.save
       redirect_to qa_project_path(@bug.project_id), notice: 'Bug was created successfully!'
       else
@@ -30,7 +29,7 @@ class Qa::BugsController < ApplicationController
 
   def edit
     authorize [:qa, @bug]
-    if @bug.project_id.in? current_user.projects.ids.to_a
+    if project_id_exist?
     else
       redirect_to qa_project_path(@bug.project_id), notice: 'Cant edit'
     end
@@ -48,7 +47,7 @@ class Qa::BugsController < ApplicationController
 
   def destroy
     authorize [:qa, @bug]
-    if @bug.project_id.in? current_user.projects.ids.to_a
+    if project_id_exist?
       @bug.destroy
       redirect_to qa_project_path(@bug.project_id), notice: 'Bug was deleted successfully'
     else
@@ -59,10 +58,14 @@ class Qa::BugsController < ApplicationController
   private
 
   def bug_params
-    params.require(:bug).permit(:title, :description, :deadline, :bug_type, :status, :project_id, :solver_id, :screnshot)
+    params.require(:bug).permit(:title, :description, :deadline, :bug_type, :status, :project_id, :creator_id, :solver_id, screnshots: [])
   end
 
   def set_bug
     @bug = Bug.find(params[:id])
+  end
+
+  def project_id_exist?
+    @bug.project_id.in? current_user.projects.ids.to_a
   end
 end

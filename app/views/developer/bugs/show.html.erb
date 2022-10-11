@@ -8,6 +8,7 @@
     <th>Bug Type</th>
     <th>Status</th>
     <th>Solver Name</th>
+    <th>Secreenshot</th>
     <th>Actions</th>
   </tr>
 
@@ -19,12 +20,20 @@
       <td><%= bug.bug_type%></td>
       <td><%= bug.status %></td>
       <td><%= bug&.solver&.name %></td>
-      <td><%= link_to 'Edit Bug', edit_developer_project_bug_path(bug.project_id, bug), class: 'btn btn-primary mx-3' %>
-      <% if (current_user.id == bug.solver_id || bug.solver_id.blank?) %>
-        <%= bug.solver_id? ? (link_to 'Remove Developer', update_solver_developer_project_bug_path(bug.project_id, bug), method: :patch, remote: true, class: 'btn btn-danger') : (link_to 'Add Developer',update_solver_developer_project_bug_path(bug.project_id, bug), method: :patch, remote: true, class: 'btn btn-dark') %></td>
+      <% if bug.screnshots.attached? %>
+        <td>
+        <% bug.screnshots.each do |screnshot| %>
+          <%= render 'display_image', screnshot: screnshot %>
+        <% end %>
+        </td>
       <% else %>
-        <%= bug.solver_id? ? (link_to 'Remove Developer', update_solver_developer_project_bug_path(bug.project_id, bug), method: :patch, remote: true, class: 'btn btn-danger disabled') : (link_to 'Add Developer',update_solver_developer_project_bug_path(bug.project_id, bug), method: :patch, remote: true, class: 'btn btn-dark disabled') %></td>
+        <td><p>No image added</p></td>
       <% end %>
+      <td><%= link_to bug_label(bug), update_solver_developer_project_bug_path(bug.project_id, bug), method: :patch, remote: true, class: "btn btn-danger #{can_assign_bug?(bug) ? '' : 'disabled'}"
+        %>
+      </td>
     </tr>
   <% end %>
 </table>
+
+<%= paginate @bugs %>
