@@ -3,6 +3,8 @@
   <div class='col-md-12'>
     <%= form_for @bug, url: {action: 'create'} do |f| %>
       <%= f.hidden_field :solver_id %>
+      <%= f.hidden_field :creator_id, value: current_user.id %>
+      <%= f.hidden_field :project_id, value: params[:project_id] %>
 
       <div class='form-group mb-3'>
         <div class='control-label col-md-8'>
@@ -36,7 +38,7 @@
         </div>
       </div>
 
-      <div class='form-group mb-3 abc'>
+      <div class='form-group mb-3 status_type'>
         <div class='control-label col-md-2'>
           <%= f.label :Status %>
         </div>
@@ -48,7 +50,7 @@
       <div class='form-group mb-3'>
         <div class='control-label col-md-8'>
           <%= f.label :screenshot %>
-          <%= f.file_field :screnshot, class: 'form-control' %>
+          <%= f.file_field :screnshots, multiple: true, class: 'form-control' %>
         </div>
       </div>
 

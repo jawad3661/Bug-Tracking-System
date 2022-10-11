@@ -1,6 +1,6 @@
-<% if @project.errors.any? %>
-  $('#errorArea').html("<%= j render('shared/errors', object: @project)%>")
-<% else %>
+<% if @project.save %>
   $('#usersTable').append("<%= j render('user_row', project: @project) %>");
   $('.close-modal').click();
+<% else %>
+  $('#errorArea').html("<%= j render('shared/errors', object: @project)%>")
 <% end %>

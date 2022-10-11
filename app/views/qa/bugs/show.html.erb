@@ -1,5 +1,7 @@
 <h1>Bugs</h1>
-<td><%= link_to 'Create', new_qa_project_bug_path, class:'btn btn-success' %></td>
+<% if project_id_exist? %>
+  <td><%= link_to 'Create', new_qa_project_bug_path, class:'btn btn-success' %></td>
+<% end %>
 <hr></hr>
 
 <table class='table table-bordered'>
@@ -18,12 +20,17 @@
       <td><%= bug.title %></td>
       <td><%= bug.description %></td>
       <td><%= bug.deadline %></td>
-      <td><%= bug.bug_type%></td>
+      <td><%= bug.bug_type %></td>
       <td><%= bug.status %></td>
       <td><%= bug&.solver&.name %></td>
-      <td><%= link_to 'Edit', edit_qa_project_bug_path(bug.project_id, bug), class: 'btn btn-primary mx-3' %>
-          <%= link_to 'Delete', qa_project_bug_path(bug.project_id, bug), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+      <% if project_id_exist? %>
+        <td><%= link_to 'Edit', edit_qa_project_bug_path(bug.project_id, bug), class: 'btn btn-primary mx-3' %>
+            <%= link_to 'Delete', qa_project_bug_path(bug.project_id, bug), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      <% end %>
     </tr>
   <% end %>
 </table>
+
+<%= paginate @bugs %>
 
