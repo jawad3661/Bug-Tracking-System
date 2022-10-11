@@ -21,6 +21,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'net-smtp', '~> 0.2.1'
 
 gem 'active_storage_validations'
+
+gem 'kaminari'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
