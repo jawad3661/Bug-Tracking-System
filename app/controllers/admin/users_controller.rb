@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, except: :index
-  before_action :set_authorize, except: :index
+  before_action :set_authorize, except: %i[index update_status]
 
   def index
     @users = User.not_admin
@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
   def update_status
     @user.update(deactivated: !@user.deactivated)
 
-    redirect_to admin_users_path, notice: "Account #{@user.deactivated? ? 'Disabled' : 'Enabled'}"
+    redirect_to admin_users_path, notice: "Account #{ @user.deactivated? ? 'Disabled' : 'Enabled' }"
   end
 
   def edit; end

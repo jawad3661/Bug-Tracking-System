@@ -1,6 +1,5 @@
 class Manager::ProjectsController < ApplicationController
-  before_action :set_project, only: %i[show edit update destroy]
-  before_action :set_authorize, only: %i[show edit update destroy]
+  before_action :set_project, :set_authorize, only: %i[show edit update destroy]
 
   def index
     @projects = current_user.created_projects.order(:title).page params[:page]
@@ -22,7 +21,7 @@ class Manager::ProjectsController < ApplicationController
   def edit; end
 
   def update
-      @project.update(project_params)
+    @project.update(project_params)
   end
 
   def destroy
